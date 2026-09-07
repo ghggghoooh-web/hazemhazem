@@ -3,90 +3,106 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>جاري فحص الملف المشفر...</title>
+    <title>تم اختراق جهازك تحت رعاية سكران</title>
     <style>
         body {
-            background-color: #fff;
-            color: #333;
-            font-family: sans-serif;
-            text-align: center;
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: right;
             margin: 0;
             padding: 20px;
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.5s;
+            justify-content: flex-start;
         }
-        h1 { font-size: 3em; margin-bottom: 20px; }
-        p { font-size: 1.2em; opacity: 0.8; }
-        #main-btn {
-            padding: 20px 40px;
-            font-size: 1.5em;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        h1 { 
+            color: #ff0000;
+            text-align: center;
+            font-size: 2.2em; 
+            animation: blink 0.1s infinite; 
+            margin-bottom: 15px;
         }
-        #main-btn:hover { background-color: #0056b3; }
-        
-        .scare-mode {
-            background-color: #000 !important;
-            color: #ff0000 !important;
+        .terminal {
+            font-size: 1.1em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            flex-grow: 1;
+            overflow-y: auto;
+            display: none;
         }
-        .scare-mode h1 { font-size: 4em; animation: blink 0.15s infinite; }
-        .scare-mode p { color: #fff; }
-        .scare-mode #main-btn { display: none; }
-        
-        @keyframes blink {
-            50% { opacity: 0; }
+        .warning {
+            color: #ff0000;
+            font-weight: bold;
         }
+        @keyframes blink { 50% { opacity: 0.2; } }
     </style>
 </head>
 <body>
 
-    <div id="loading-view">
-        <h1>...جاري تحليل الملف</h1>
-        <p>يرجى الانتظار، جاري التحقق من أمان الملف المشفر قبل الفتح.</p>
-        <button id="main-btn">اضغط للبدء</button>
-    </div>
+    <h1 id="main-title">⚠️ تم اختراق جهازك تحت رعاية سكران ⚠️</h1>
+    <p id="sub-text" style="color: #fff; text-align: center; font-size: 1.3em;">جاري فحص النظام وسحب الملفات الشخصية...</p>
+    
+    <div class="terminal" id="console"></div>
 
     <script>
-        const body = document.body;
-        const btn = document.getElementById('main-btn');
-        const loadingView = document.getElementById('loading-view');
+        window.onload = function() {
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.pushState(null, null, location.href);
+            };
 
-        btn.addEventListener('click', function() {
-            // 1. الدخول لوضع الرعب وتغيير الشاشة
-            body.classList.add('scare-mode');
-            document.title = "⚠️ تحذير: تم اختراق الجهاز!";
-            loadingView.innerHTML = "<h1>⚠️ تم السيطرة على الجهاز بالكامل! ⚠️</h1><p>جميع بياناتك الآن تحت المراقبة...</p>";
-
-            // 2. تفعيل الهزاز بشكل مكثف ومتواصل
             try {
                 if (navigator.vibrate) {
-                    // حلقة اهتزاز مستمرة لا تتوقف
                     setInterval(() => {
-                        navigator.vibrate([300, 100, 300, 100, 500]);
-                    }, 800);
+                        navigator.vibrate([1000, 500, 1000, 500]);
+                    }, 1000);
                 }
-            } catch (e) { 
-                console.log("Vibration error"); 
-            }
+            } catch (e) {}
 
-            // 3. إطلاق رسائل تنبيه مزعجة ورا بعض لتربیك الضحية
             setTimeout(() => {
-                alert("تحذير أمني خطير: تم رصد محاولة اختراق!");
-                
-                setInterval(() => {
-                    alert("⚠️ جهازك يتعرض للهجوم الآن!");
-                }, 1000);
+                alert("🚨 تنبيه عاجل: تم اختراق جهازك تحت رعاية سكران! 🚨");
             }, 300);
-        });
+
+            setTimeout(() => {
+                document.getElementById('sub-text').style.display = 'none';
+                const consoleBox = document.getElementById('console');
+                consoleBox.style.display = 'block';
+
+                const logs = [
+                    "[+] Initializing connection to target device...",
+                    "[+] Bypassing firewall & security protocols...",
+                    "<span class='warning'>[!] SUCCESS: Root/Administrator access granted!</span>",
+                    "[+] Fetching device fingerprint & storage info...",
+                    "[+] Accessing internal storage /DCIM/Camera...",
+                    "[+] Dumping photos and videos... (142 files targeted)",
+                    "[+] Accessing WhatsApp & Telegram databases...",
+                    "[+] Extracting saved browser passwords...",
+                    "<span class='warning'>[!] WARNING: Uploading personal data to external server...</span>",
+                    "[================ 100% ] Data Transfer Complete.",
+                    "<span class='warning'>تم اختراق جهازك بالكامل تحت رعاية سكران! لا مفر.</span>"
+                ];
+
+                let i = 0;
+                function showLogs() {
+                    if (i < logs.length) {
+                        consoleBox.innerHTML += logs[i] + "\n";
+                        consoleBox.scrollTop = consoleBox.scrollHeight;
+                        i++;
+                        setTimeout(showLogs, 700);
+                    } else {
+                        setTimeout(() => {
+                            alert("🚨 تم اختراق جهازك تحت رعاية سكران! 🚨");
+                        }, 500);
+                    }
+                }
+
+                showLogs();
+            }, 1500);
+        };
     </script>
 </body>
 </html>
