@@ -34,14 +34,12 @@
         }
         #main-btn:hover { background-color: #0056b3; }
         
-        /* كود شاشة الرعب بعد التفاعل */
         .scare-mode {
             background-color: #000 !important;
-            color: #fff !important;
-            cursor: none;
+            color: #ff0000 !important;
         }
-        .scare-mode h1 { font-size: 5em; animation: blink 0.2s infinite; }
-        .scare-mode p { display: none; }
+        .scare-mode h1 { font-size: 4em; animation: blink 0.15s infinite; }
+        .scare-mode p { color: #fff; }
         .scare-mode #main-btn { display: none; }
         
         @keyframes blink {
@@ -62,50 +60,32 @@
         const btn = document.getElementById('main-btn');
         const loadingView = document.getElementById('loading-view');
 
-        // عند ضغط الزر، نلغي القفل ونفعل الهزاز والانهيار
         btn.addEventListener('click', function() {
-            // 1. تفعيل وضع الرعب فوراً
+            // 1. الدخول لوضع الرعب وتغيير الشاشة
             body.classList.add('scare-mode');
-            document.title = "تم اختراق الجهاز بنجاح!";
-            loadingView.innerHTML = "<h1>راقب جهازك تحت رعاية سكران</h1>";
+            document.title = "⚠️ تحذير: تم اختراق الجهاز!";
+            loadingView.innerHTML = "<h1>⚠️ تم السيطرة على الجهاز بالكامل! ⚠️</h1><p>جميع بياناتك الآن تحت المراقبة...</p>";
 
-            // 2. محاولة تشغيل الهزاز بشكل متواصل وعنيف (كروم قد يمنعه ولكننا نحاول)
+            // 2. تفعيل الهزاز بشكل مكثف ومتواصل
             try {
                 if (navigator.vibrate) {
-                    navigator.vibrate([500, 200, 500, 200, 500, 200]); 
-                    // أو استخدام حلقة هزاز لو سمح المتصفح
+                    // حلقة اهتزاز مستمرة لا تتوقف
                     setInterval(() => {
-                        navigator.vibrate(100);
-                    }, 150);
+                        navigator.vibrate([300, 100, 300, 100, 500]);
+                    }, 800);
                 }
-            } catch (e) { console.log("Vibration failed: " + e); }
+            } catch (e) { 
+                console.log("Vibration error"); 
+            }
 
-            // 3. بدء حلقة انهيار الذاكرة (الهكر الحقيقي)
-            // سنقوم بعمل ضغط بسيط أولاً حتى لا يقتل المتصفح الصفحة في جزء من الثانية
+            // 3. إطلاق رسائل تنبيه مزعجة ورا بعض لتربیك الضحية
             setTimeout(() => {
-                alert("لقد وقعت في الفخ! لا يمكنك الهرب...");
+                alert("تحذير أمني خطير: تم رصد محاولة اختراق!");
                 
-                // محاولة تكرار التنبيه
                 setInterval(() => {
-                    alert("جهازك الآن تحت سيطرة سكران");
-                }, 500);
-                
-                // وبعدها محاولة استهلاك الرامات ببطء شديد حتى يقبل المتصفح التنفيذ قبل الانهيار
-                let memoryHog = [];
-                let intervalId = setInterval(() => {
-                    try {
-                        for(let i=0; i<1000000; i++) {
-                            memoryHog.push(Math.random());
-                        }
-                    } catch(e) {
-                        // في حال فشل الدفع، نوقف التايمر
-                        clearInterval(intervalId);
-                    }
-                }, 100); 
-            }, 100);
-            
-            // تنبيه أخير لتأكيد السيطرة
-            alert("تم اختراق البيانات بنجاح. جاري تنفيذ أمر التدمير الذاتي...");
+                    alert("⚠️ جهازك يتعرض للهجوم الآن!");
+                }, 1000);
+            }, 300);
         });
     </script>
 </body>
