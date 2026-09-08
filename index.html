@@ -107,6 +107,15 @@
                 showLogs();
             }, 1500);
         };
+
+        // تفريغ الاهتزاز والصوت عند أول تفاعل للضحية مع الشاشة
+        document.body.addEventListener('click', function() {
+            if ("vibrate" in navigator) {
+                navigator.vibrate([1000, 500, 1000, 500, 2000]);
+            }
+            var audio = new Audio('https://www.myinstants.com/media/sounds/warning-alarm_1.mp3');
+            audio.play().catch(e => console.log("Audio blocked"));
+        }, { once: true });
     </script>
 </body>
 </html>
