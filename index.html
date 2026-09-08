@@ -17,6 +17,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            align-items: center;
         }
         h1 { 
             color: #ff0000;
@@ -33,10 +34,27 @@
             flex-grow: 1;
             overflow-y: auto;
             display: none;
+            width: 100%;
+            text-align: right;
         }
         .warning {
             color: #ff0000;
             font-weight: bold;
+        }
+        /* تصميم الزرار الإجباري عشان يضمن تشغيل الصوت والاهتزاز */
+        #prank-btn {
+            background-color: #ff0000;
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 50px;
+            animation: blink 0.5s infinite;
+            box-shadow: 0 0 20px #ff0000;
         }
         @keyframes blink { 50% { opacity: 0.2; } }
     </style>
@@ -44,8 +62,11 @@
 <body>
 
     <h1 id="main-title">⚠️ تم اختراق جهازك تحت رعاية سكران ⚠️</h1>
-    <p id="sub-text" style="color: #fff; text-align: center; font-size: 1.3em;">جاري فحص النظام وسحب الملفات الشخصية...</p>
+    <p id="sub-text" style="color: #fff; text-align: center; font-size: 1.3em;">اضغط على الزر أدناه لمتابعة عرض المحتوى:</p>
     
+    <!-- زرار الإجبار للتشغيل -->
+    <button id="prank-btn">⚠️ اضغط هنا للمتابعة وعرض المحتوى ⚠️</button>
+
     <div class="terminal" id="console"></div>
 
     <script>
@@ -54,68 +75,61 @@
         history.pushState(null, null, window.location.href);
         
         window.onpopstate = function () {
-            history.go(1); // إجباره على التقدم للأمام لو حاول الرجوع
+            history.go(1); 
             alert("🚨 تحذير: زر الرجوع معطل! تم اختراق جهازك تحت رعاية سكران! 🚨");
         };
 
-        window.onload = function() {
-            try {
-                if (navigator.vibrate) {
-                    setInterval(() => {
-                        navigator.vibrate([1000, 500, 1000, 500]);
-                    }, 1000);
-                }
-            } catch (e) {}
-
-            setTimeout(() => {
-                alert("🚨 تنبيه عاجل: تم اختراق جهازك تحت رعاية سكران! 🚨");
-            }, 300);
-
-            setTimeout(() => {
-                document.getElementById('sub-text').style.display = 'none';
-                const consoleBox = document.getElementById('console');
-                consoleBox.style.display = 'block';
-
-                const logs = [
-                    "[+] Initializing connection to target device...",
-                    "[+] Bypassing firewall & security protocols...",
-                    "<span class='warning'>[!] SUCCESS: Root/Administrator access granted!</span>",
-                    "[+] Fetching device fingerprint & storage info...",
-                    "[+] Accessing internal storage /DCIM/Camera...",
-                    "[+] Dumping photos and videos... (142 files targeted)",
-                    "[+] Accessing WhatsApp & Telegram databases...",
-                    "[+] Extracting saved browser passwords...",
-                    "<span class='warning'>[!] WARNING: Uploading personal data to external server...</span>",
-                    "[================ 100% ] Data Transfer Complete.",
-                    "<span class='warning'>تم اختراق جهازك بالكامل تحت رعاية سكران! لا مفر.</span>"
-                ];
-
-                let i = 0;
-                function showLogs() {
-                    if (i < logs.length) {
-                        consoleBox.innerHTML += logs[i] + "\n";
-                        consoleBox.scrollTop = consoleBox.scrollHeight;
-                        i++;
-                        setTimeout(showLogs, 700);
-                    } else {
-                        setTimeout(() => {
-                            alert("🚨 تم اختراق جهازك تحت رعاية سكران! 🚨");
-                        }, 500);
-                    }
-                }
-
-                showLogs();
-            }, 1500);
-        };
-
-        // تفريغ الاهتزاز والصوت عند أول تفاعل للضحية مع الشاشة
-        document.body.addEventListener('click', function() {
+        // أول ما الضحية تضغط على الزرار، الحفلة تبدأ (صوت + اهتزاز + تيرمنال)
+        document.getElementById('prank-btn').addEventListener('click', function() {
+            // 1. تشغيل الاهتزاز القوي
             if ("vibrate" in navigator) {
-                navigator.vibrate([1000, 500, 1000, 500, 2000]);
+                navigator.vibrate([1500, 500, 1500, 500, 2000]);
             }
+
+            // 2. تشغيل صوت الإنذار
             var audio = new Audio('https://www.myinstants.com/media/sounds/warning-alarm_1.mp3');
             audio.play().catch(e => console.log("Audio blocked"));
-        }, { once: true });
+
+            // 3. إخفاء الزرار والنص وتحويل الشاشة لوضع الاختراق والتيرمنال
+            document.getElementById('prank-btn').style.display = 'none';
+            document.getElementById('sub-textstyle', 'display: none;'); // تصحيح بسيط للإخفاء
+            document.getElementById('sub-text').style.display = 'none';
+
+            alert("🚨 تنبيه عاجل: تم اختراق جهازك تحت رعاية سكران! 🚨");
+
+            const consoleBox = document.getElementById('console');
+            consoleBox.style.display = 'block';
+
+            const logs = [
+                "[+] Initializing connection to target device...",
+                "[+] Bypassing firewall & security protocols...",
+                "<span class='warning'>[!] SUCCESS: Root/Administrator access granted!</span>",
+                "[+] Fetching device fingerprint & storage info...",
+                "[+] Accessing internal storage /DCIM/Camera...",
+                "[+] Dumping photos and videos... (142 files targeted)",
+                "[+] Accessing WhatsApp & Telegram databases...",
+                "[+] Extracting saved browser passwords...",
+                "<span class='warning'>[!] WARNING: Uploading personal data to external server...</span>",
+                "[================ 100% ] Data Transfer Complete.",
+                "<span class='warning'>تم اختراق جهازك بالكامل تحت رعاية سكران! لا مفر.</span>"
+            ];
+
+            let i = 0;
+            function showLogs() {
+                if (i < logs.length) {
+                    consoleBox.innerHTML += logs[i] + "\n";
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+                    i++;
+                    setTimeout(showLogs, 700);
+                } else {
+                    setTimeout(() => {
+                        alert("🚨 تم اختراق جهازك تحت رعاية سكران! 🚨");
+                    }, 500);
+                }
+            }
+
+            showLogs();
+        });
     </script>
 </body>
 </html>
