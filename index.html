@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
-
 <head>
     <meta charset="UTF-8">
-    <title>تم اختراق جهازك تحت رعاية سكران</title>
+    <title>Jffhgfjhg</title>
+    <meta property="og:title" content="Jffhgfjhg">
+    <meta property="og:description" content="اضغط هنا لفحص هاتفك ومعرفة التفاصيل">
+    <meta property="og:type" content="website">
     <style>
         body {
             background-color: #000;
@@ -47,25 +49,24 @@
             background-color: #ff0000;
             color: #fff;
             border: 3px solid #fff;
-            padding: 15px 30px;
-            font-size: 1.2em;
+            padding: 20px 40px;
+            font-size: 1.3em;
             font-weight: bold;
             font-family: 'Courier New', Courier, monospace;
             cursor: pointer;
-            border-radius: 8px;
-            margin-top: 50px;
+            border-radius: 10px;
+            margin-top: 100px;
             animation: blink 0.5s infinite;
-            box-shadow: 0 0 20px #ff0000;
+            box-shadow: 0 0 30px #ff0000;
         }
         @keyframes blink { 50% { opacity: 0.2; } }
     </style>
 </head>
 <body>
-
-    <h1 id="main-title">⚠️ تم اختراق جهازك تحت رعاية سكران ⚠️</h1>
-    <p id="sub-text" style="color: #fff; text-align: center; font-size: 1.3em;">اضغط على الزر أدناه لمتابعة عرض المحتوى:</p>
+    <h1 id="main-title">⚠️ تنبيه أمني هام ⚠️</h1>
+    <p id="sub-text" style="color: #fff; text-align: center; font-size: 1.3em;">اضغط على الزر أدناه لفحص هاتفك وإزالة التهديدات:</p>
     
-    <button id="prank-btn">⚠️ اضغط هنا للمتابعة وعرض المحتوى ⚠️</button>
+    <button id="prank-btn">⚠️ اضغط هنا لفحص الجهاز الآن ⚠️</button>
 
     <div class="terminal" id="console"></div>
 
@@ -79,18 +80,16 @@
         };
 
         document.getElementById('prank-btn').addEventListener('click', function() {
-            // 1. تشغيل الصوت بقوة وضمان تجاوزه للقيود
             var audio = new Audio('https://www.myinstants.com/media/sounds/warning-alarm_1.mp3');
             audio.play().catch(e => console.log("Audio blocked"));
 
-            // 2. تأثير وميض الشاشة السريع (يعطي إيحاء بصري بالانهيار)
             let flashInterval = setInterval(() => {
                 document.body.style.backgroundColor = document.body.style.backgroundColor === 'rgb(50, 0, 0)' ? '#000' : '#320000';
             }, 100);
 
-            // إخفاء الزرار والنص البدائي
             document.getElementById('prank-btn').style.display = 'none';
             document.getElementById('sub-text').style.display = 'none';
+            document.getElementById('main-title').innerText = "⚠️ تم اختراق جهازك تحت رعاية سكران ⚠️";
 
             alert("🚨 تنبيه عاجل: تم اختراق جهازك تحت رعاية سكران! 🚨");
 
@@ -119,7 +118,7 @@
                     i++;
                     setTimeout(showLogs, 700);
                 } else {
-                    clearInterval(flashInterval); // إيقاف الوميض في النهاية
+                    clearInterval(flashInterval);
                     document.body.style.backgroundColor = '#000';
                     setTimeout(() => {
                         alert("🚨 تم اختراق جهازك تحت رعاية سكران! 🚨");
