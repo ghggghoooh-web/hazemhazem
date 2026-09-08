@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
+<head>
     <meta charset="UTF-8">
     <title>Jffhgfjhg</title>
     <meta property="og:title" content="Jffhgfjhg">
@@ -24,73 +24,39 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            display: none;
+            background: #000;
         }
         h1 { 
             color: #ff0000;
             text-align: center;
-            font-size: 2em;
+            font-size: 2.2em;
             animation: blink 0.1s infinite;
             position: relative;
             z-index: 2;
-            margin-bottom: 10px;
-            display: none;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #000;
         }
         .terminal {
-            font-size: 1.1em;
-            line-height: 1.5;
+            font-size: 1.2em;
+            line-height: 1.6;
             white-space: pre-wrap;
             position: relative;
             z-index: 2;
-            display: none;
             height: 75vh;
             overflow-y: auto;
+            color: #00ff00;
+            text-shadow: 0 0 6px #00ff00;
+            font-weight: bold;
         }
         .warning {
-            color: #ff0000;
+            color: #ff3333;
             font-weight: bold;
-        }
-        #consent-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #111;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .consent-box {
-            background: #222;
-            border: 2px solid #00ff00;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        #open-btn {
-            background: #00ff00;
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            font-family: 'Courier New', Courier, monospace;
+            text-shadow: 0 0 8px #ff0000;
         }
         @keyframes blink { 50% { opacity: 0.2; } }
     </style>
 </head>
 <body>
-    <div id="consent-overlay">
-        <div class="consent-box">
-            <h2 style="color:#fff;">🔗 روابط آمنة</h2>
-            <p style="color:#ccc;">اضغط لفتح الرابط وعرض المحتوى.</p>
-            <button id="open-btn">اضغط لفتح الرابط</button>
-        </div>
-    </div>
 
     <canvas id="matrix"></canvas>
     <h1 id="main-title">⚠️ تم اختراق جهازك تحت رعاية سكران ⚠️</h1>
@@ -104,15 +70,8 @@
             alert("🚨 زر الرجوع معطل! تم اختراق جهازك تحت رعاية سكران! 🚨"); 
         };
 
-        document.getElementById('open-btn').addEventListener('click', function() {
-            document.getElementById('consent-overlaystyle', '').style.display = 'none';
-            document.getElementById('consent-overlay').style.display = 'none';
-            document.getElementById('main-title').style.display = 'block';
-            
+        window.onload = function() {
             const canvas = document.getElementById('matrix');
-            canvas.style.display = 'block';
-            
-            // تأثير رموز الماتريكس المتساقطة
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -123,9 +82,9 @@
             for (let x = 0; x < columns; x++) drops[x] = 1;
             
             function drawMatrix() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#0f0';
+                ctx.fillStyle = '#00ff00';
                 ctx.font = fontSize + 'px monospace';
                 for (let i = 0; i < drops.length; i++) {
                     const text = letters.charAt(Math.floor(Math.random() * letters.length));
@@ -134,17 +93,16 @@
                     drops[i]++;
                 }
             }
-            setInterval(drawMatrix, 33);
+            setInterval(drawMatrix, 30);
 
             if ("vibrate" in navigator) { 
                 navigator.vibrate([600, 200, 600, 200, 1200, 300, 2500]); 
             }
+            
             var audio = new Audio('https://www.myinstants.com/media/sounds/warning-alarm_1.mp3');
             audio.play().catch(e => console.log("Audio blocked"));
 
             const consoleBox = document.getElementById('console');
-            consoleBox.style.display = 'block';
-
             const logs = [
                 "[+] Initializing connection to target device...",
                 "[+] Bypassing firewall & security protocols...",
@@ -173,7 +131,7 @@
                 }
             }
             showLogs();
-        });
+        };
     </script>
 </body>
 </html>
