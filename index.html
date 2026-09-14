@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تنبيه</title>
@@ -9,42 +10,58 @@
             color: #00ff00;
             font-family: monospace;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             overflow: hidden;
         }
-        .matrix-text {
-            font-size: 14px;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            word-break: break-all;
-            opacity: 0.8;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <div class="matrix-text">
-        ⚠️ تم اختراق جهازك تحت رعاية منال الكفراوية ⚠️
-        
-        ...Initialising connection to target device [+]
-        ...Bypassing firewall & security protocols [+]
-        [SUCCESS: Root/Administrator access granted]
-        ...Injecting payload into system kernel [+]
-        ...Accessing internal storage /DCIM/Camera [+]
-        ...Dumping photos and videos... (142 files targeted) [+]
-        ...Accessing WhatsApp & Telegram databases [+]
-        ...Extracting saved browser passwords [+]
-        [WARNING: Uploading personal data to external server]
-        ...Data Transfer Complete ! 100% ==============+
-        
-        تم اختراق جهازك بالكامل تحت رعاية منال الكفراوية
-    </div>
+    <canvas id="matrix"></canvas>
 
     <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+
+        const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*()*&^%';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff00';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+
         window.onload = function() {
             setTimeout(function() {
                 alert("🚨 تم اختراق جهازك بالكامل تحت رعاية منال الكفراوية! 🚨");
-            }, 500);
+            }, 1000);
         };
     </script>
 
