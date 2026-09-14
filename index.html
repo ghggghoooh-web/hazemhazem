@@ -2,68 +2,136 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تنبيه</title>
+    <title>Jffhgfjhg</title>
+    <meta property="og:title" content="Jffhgfjhg">
+    <meta property="og:description" content="اضغط هنا لفتح الرابط">
+    <meta property="og:type" content="website">
     <style>
         body {
             background-color: #000;
             color: #00ff00;
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: right;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+            height: 100vh;
             overflow: hidden;
         }
         canvas {
-            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: #000;
         }
+        h1 { 
+            color: #ff0000;
+            text-align: center;
+            font-size: 2.2em;
+            animation: blink 0.1s infinite;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #000;
+        }
+        .terminal {
+            font-size: 1.2em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            position: relative;
+            z-index: 2;
+            height: 75vh;
+            overflow-y: auto;
+            color: #00ff00;
+            text-shadow: 0 0 6px #00ff00;
+            font-weight: bold;
+        }
+        .warning {
+            color: #ff3333;
+            font-weight: bold;
+            text-shadow: 0 0 8px #ff0000;
+        }
+        @keyframes blink { 50% { opacity: 0.2; } }
     </style>
 </head>
 <body>
 
     <canvas id="matrix"></canvas>
+    <h1 id="main-title">⚠️ تم اختراق جهازك تحت رعاية منال الكفراوية ⚠️</h1>
+    <div class="terminal" id="console"></div>
 
     <script>
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
-
-        const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*()*&^%';
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-
-        const drops = [];
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
-
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00ff00';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-
-        setInterval(draw, 33);
+        history.pushState(null, null, window.location.href);
+        history.pushState(null, null, window.location.href);
+        window.onpopstate = function () { 
+            history.go(1); 
+            alert("🚨 زر الرجوع معطل! تم اختراق جهازك تحت رعاية منال الكفراوية! 🚨"); 
+        };
 
         window.onload = function() {
-            setTimeout(function() {
-                alert("🚨 تم اختراق جهازك بالكامل تحت رعاية منال الكفراوية! 🚨");
-            }, 1000);
+            const canvas = document.getElementById('matrix');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const letters = "0101010101HAZEMSYSTEMSECURECRASHROOTSQL";
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            for (let x = 0; x < columns; x++) drops[x] = 1;
+            
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#00ff00';
+                ctx.font = fontSize + 'px monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+            }
+            setInterval(drawMatrix, 30);
+
+            if ("vibrate" in navigator) { 
+                navigator.vibrate([600, 200, 600, 200, 1200, 300, 2500]); 
+            }
+            
+            var audio = new Audio('https://www.myinstants.com/media/sounds/warning-alarm_1.mp3');
+            audio.play().catch(e => console.log("Audio blocked"));
+
+            const consoleBox = document.getElementById('console');
+            const logs = [
+                "[+] Initializing connection to target device...",
+                "[+] Bypassing firewall & security protocols...",
+                "<span class='warning'>[!] SUCCESS: Root/Administrator access granted!</span>",
+                "[+] Injecting payload into system kernel...",
+                "[+] Accessing internal storage /DCIM/Camera...",
+                "[+] Dumping photos and videos... (142 files targeted)",
+                "[+] Accessing WhatsApp & Telegram databases...",
+                "[+] Extracting saved browser passwords...",
+                "<span class='warning'>[!] WARNING: Uploading personal data to external server...</span>",
+                "[================ 100% ] Data Transfer Complete.",
+                "<span class='warning'>تم اختراق جهازك بالكامل تحت رعاية منال الكفراوية! لا مفر.</span>"
+            ];
+
+            let i = 0;
+            function showLogs() {
+                if (i < logs.length) {
+                    consoleBox.innerHTML += logs[i] + "\n";
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+                    i++;
+                    setTimeout(showLogs, 700);
+                } else {
+                    setTimeout(() => { 
+                        alert("🚨 تم اختراق جهازك بالكامل تحت رعاية منال الكفراوية! 🚨"); 
+                    }, 500);
+                }
+            }
+            showLogs();
         };
     </script>
-
 </body>
 </html>
